@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Repository Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #d7ebff; /* Light background */
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #343a40;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-info {
+            color: #fff;
+            background-color: #17a2b8;
+            border: none;
+        }
+        .btn-info:hover {
+            background-color: #138496;
+        }
+        .list-group-item {
+            background-color: #e9ecef;
+        }
+        .list-group-item:hover {
+            background-color: #bbbab7; /* Change background on hover */
+            color: white; /* White text on hover */
+        }
+        .text-muted {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Git Repository Search</h1>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="query">Search Query:</label>
+                <input type="text" class="form-control" id="query" name="query" placeholder="Enter your query" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Button to navigate to the instructions page -->
+        <div class="mt-3">
+            <a href="/instructions" class="btn btn-info">View Instructions</a>
+        </div>
+
+        <hr>
+
+        <div class="mt-4">
+            {% if response_data %}
+                <h3>Search Results</h3>
+                <ul class="list-group">
+                    {% for result in response_data %}
+                        <li class="list-group-item">
+                            {% if result.error %}
+                                <strong>Error:</strong> {{ result.error }}
+                            {% elif result.main_topic %}
+                                <strong>Main Topic:</strong> {{ result.main_topic }}
+                            {% elif result.author_name %}
+                                <strong>Author:</strong> {{ result.author_name }}<br>
+                                <strong>Repository:</strong> <a href="{{ result.repository_url }}" target="_blank">{{ result.repository_name }}</a><br>
+                                
+                                {% if result.stars is not none and result.stars != '' %}
+                                    <strong>Stars:</strong> {{ result.stars }}<br>
+                                {% endif %}
+                                
+                                {% if result.tags is not none and result.tags != '' %}
+                                    <strong>Tags:</strong> {{ result.tags }}
+                                {% endif %}
+                            {% elif result.stars %}
+                                <strong>Stars:</strong> {{ result.stars }}
+                            {% elif result.tags %}
+                                <strong>Tags:</strong> {{ result.tags }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No results to display. Please submit a query above.</p>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #d7ebff; /* Light background */
+        }
+        h1 {
+            color: #343a40; /* Dark grey heading */
+            font-weight: bold;
+        }
+        .container {
+            background-color: #ffffff; /* White background for container */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        .list-group-item {
+            background-color: #e9ecef; /* Light grey background for list items */
+            color: #343a40; /* Dark grey text */
+            border: 1px solid #dee2e6;
+        }
+        .list-group-item:hover {
+            background-color: #bbbab7; /* Change background on hover */
+            color: white; /* White text on hover */
+        }
+        a {
+            color: #007bff; /* Blue links */
+        }
+        a:hover {
+            color: #0056b3; /* Darker blue on hover */
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Instructions</h1>
+        <ul class="list-group">
+            {% for instruction in instructions %}
+            <li class="list-group-item">
+                <strong>Command:</strong> {{ instruction.command }}<br>
+                <strong>Description:</strong> {{ instruction.description }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="/" class="btn btn-link mt-3">Back to Search</a>
+    </div>
+</body>
+</html>
